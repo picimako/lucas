@@ -1,0 +1,6 @@
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+Many classes are reused from the Luke subproject of the Apache Lucene (https://github.com/apache/lucene) project.
+Those classes are placed under the 'com.picimako.org.apache.lucene.luke...' package structure corresponding
+to their original packages.

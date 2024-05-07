@@ -1,3 +1,4 @@
+import org.apache.tools.ant.filters.*
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 
@@ -9,8 +10,6 @@ plugins {
     alias(libs.plugins.kotlin) // Kotlin support
     alias(libs.plugins.gradleIntelliJPlugin) // Gradle IntelliJ Plugin
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
-    alias(libs.plugins.qodana) // Gradle Qodana Plugin
-    alias(libs.plugins.kover) // Gradle Kover Plugin
 }
 
 group = properties("pluginGroup").get()
@@ -23,10 +22,35 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-//    implementation(libs.annotations)
+    val luceneVersion = "9.10.0"
+
+    implementation("org.apache.lucene:lucene-core:$luceneVersion")
+
+    implementation("org.apache.lucene:lucene-codecs:$luceneVersion")
+    implementation("org.apache.lucene:lucene-backward-codecs:$luceneVersion")
+    implementation("org.apache.lucene:lucene-analysis-common:$luceneVersion")
+    implementation("org.apache.lucene:lucene-queries:$luceneVersion")
+    implementation("org.apache.lucene:lucene-queryparser:$luceneVersion")
+    implementation("org.apache.lucene:lucene-misc:$luceneVersion")
+    //This is so that files in Luke that don't have to be changed are not stored in this repository.
+    implementation("org.apache.lucene:lucene-luke:$luceneVersion")
+
+    runtimeOnly("org.apache.lucene:lucene-highlighter:$luceneVersion")
+    runtimeOnly("org.apache.lucene:lucene-analysis-icu:$luceneVersion")
+    runtimeOnly("org.apache.lucene:lucene-analysis-kuromoji:$luceneVersion")
+    runtimeOnly("org.apache.lucene:lucene-analysis-morfologik:$luceneVersion")
+    runtimeOnly("org.apache.lucene:lucene-analysis-nori:$luceneVersion")
+    runtimeOnly("org.apache.lucene:lucene-analysis-opennlp:$luceneVersion")
+    runtimeOnly("org.apache.lucene:lucene-analysis-phonetic:$luceneVersion")
+    runtimeOnly("org.apache.lucene:lucene-analysis-smartcn:$luceneVersion")
+    runtimeOnly("org.apache.lucene:lucene-analysis-stempel:$luceneVersion")
+    runtimeOnly("org.apache.lucene:lucene-suggest:$luceneVersion")
+
+    //In case one wants to open in index using AssertingCodec in that index,
+    // add implementation("org.apache.lucene:lucene-test-framework:$luceneVersion")
 }
 
-// Set the JVM language level used to build the project.
+// Set the JVM language level used to build the project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
 kotlin {
     jvmToolchain(17)
 }
@@ -45,15 +69,6 @@ intellij {
 changelog {
     groups.empty()
     repositoryUrl = properties("pluginRepositoryUrl")
-}
-
-// Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
-koverReport {
-    defaults {
-        xml {
-            onCheck = true
-        }
-    }
 }
 
 tasks {
@@ -93,27 +108,11 @@ tasks {
         }
     }
 
-    // Configure UI tests plugin
-    // Read more: https://github.com/JetBrains/intellij-ui-test-robot
-    runIdeForUiTests {
-        systemProperty("robot-server.port", "8082")
-        systemProperty("ide.mac.message.dialogs.as.sheets", "false")
-        systemProperty("jb.privacy.policy.text", "<!--999.999-->")
-        systemProperty("jb.consents.confirmation.enabled", "false")
-    }
-
-    signPlugin {
-        certificateChain = environment("CERTIFICATE_CHAIN")
-        privateKey = environment("PRIVATE_KEY")
-        password = environment("PRIVATE_KEY_PASSWORD")
-    }
-
-    publishPlugin {
-        dependsOn("patchChangelog")
-        token = environment("PUBLISH_TOKEN")
-        // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
-        // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
-        // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
-        channels = properties("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
+    // Process UTF8 property files to unicode escapes.
+    withType<ProcessResources>().forEach { task ->
+        task.filesMatching("**/messages*.properties") {
+            task.filteringCharset = "UTF-8"
+            filter<EscapeUnicode>()
+        }
     }
 }

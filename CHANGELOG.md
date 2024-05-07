@@ -1,7 +1,9 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# lucas Changelog
+# Lucas Changelog
 
 ## [Unreleased]
+
+## [0.1.0]
 ### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- Integrated Lucene's Luke application into this IDE plugin. Code changes from Luke are applied up to version 9.10.0. 

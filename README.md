@@ -1,44 +1,48 @@
-# lucas
-
-![Build](https://github.com/picimako/lucas/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
-
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Adjust the [pluginGroup](./gradle.properties), [plugin ID](./src/main/resources/META-INF/plugin.xml) and [sources package](./src/main/kotlin).
-- [ ] Adjust the plugin description in `README` (see [Tips][docs:plugin-description])
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html?from=IJPluginTemplate).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the `PLUGIN_ID` in the above README badges.
-- [ ] Set the [Plugin Signing](https://plugins.jetbrains.com/docs/intellij/plugin-signing.html?from=IJPluginTemplate) related [secrets](https://github.com/JetBrains/intellij-platform-plugin-template#environment-variables).
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
+# Lucas (Apache Lucene's Luke for IntelliJ)
 
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+Lucas is a plugin that brings [Apache Lucene's Luke](https://github.com/apache/lucene/tree/main/lucene/luke) standalone desktop application to IntelliJ-based IDEs.
+Its goal is to provide a way to use Luke in an integrated way.
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
+IMPORTANT: The plugin is in beta state, and will stay in that for a while, so please use it with care, always have a backup of your indexes,
+and report issues if you find any.
 
-To keep everything working, do not remove `<!-- ... -->` sections. 
+It aims to also use and mirror the source code and functionality of Luke itself as much as possible, so that
+it remains close to the original application, minimizing maintenance efforts, while still providing extra, IDE specific functionality.
+
+The tool can be opened with the menu action at `Tools` / `Luke - Lucene Toolbox`, or via the [Search everywhere](https://www.jetbrains.com/help/idea/searching-everywhere.html)
+feature with the same name, and it opens on a new editor tab.
+Only one Luke editor tab can be open at once, calling the action again focuses on the already open Luke editor.
+
+Main differences between Lucas and Luke:
+- Opening the Luke tab in the IDE doesn't open up the **Open Index** dialog automatically. A plugin setting might be added in a future release to toggle this.
+- Luke's themes are removed. The plugin uses the theme currently set in the IDE.
+- Some buttons, icons, and UI element sizes are different, and may be located slightly elsewhere, to provide a smoother integration and user experience.
+- The Help menu and About dialog have been removed.
+
+![Lucas UI Overview tab](lucas_ui.png)
+
+### Reporting issues
+
+Changes (maybe with some exceptions) will be introduced only when they have already been introduced in Luke itself (be it feature or bugfix),
+or when they are specific to the IDE/plugin and don't require a corresponding change in Luke.
+
+Thus, before reporting an issue, please check if it can be reproduced in Luke itself (depending on the nature of the issue).
+If it can be, please raise the issue under the [Apache/Lucene](https://github.com/apache/lucene) repository, otherwise report it in this one.
+
 <!-- Plugin description end -->
 
-## Installation
+### Project structure notes
 
-- Using the IDE built-in plugin system:
-  
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "lucas"</kbd> >
-  <kbd>Install</kbd>
-  
-- Manually:
+Files that were copied from Lucene/Luke and modified for this integration, are located inside their corresponding
+`com.picimako.[original package in Luke]` packages for easier discovery and mapping.
 
-  Download the [latest release](https://github.com/picimako/lucas/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+### The integration process of Luke into IntelliJ
 
+If you are interested in what steps I took to integrate Luke into IntelliJ, or you need a kind of guide to integrate it into a different IDE,
+you can find the detailed, sort of step-by-step guide in the [Luke integration steps](/LUKE_INTEGRATION_STEPS.md) document.
 
 ---
 Plugin based on the [IntelliJ Platform Plugin Template][template].
 
 [template]: https://github.com/JetBrains/intellij-platform-plugin-template
-[docs:plugin-description]: https://plugins.jetbrains.com/docs/intellij/plugin-user-experience.html#plugin-description-and-presentation
