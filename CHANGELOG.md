@@ -8,6 +8,7 @@
 ### Changed
 - Changed the file chooser dialog in the 'Open Index' and 'Create Index' dialogs to an IntelliJ one to provide
 a smoother user experience.
+- Replaced the previous GIF loading icon to a sharper SVG one. 
 
 ## [0.1.0]
 ### Added

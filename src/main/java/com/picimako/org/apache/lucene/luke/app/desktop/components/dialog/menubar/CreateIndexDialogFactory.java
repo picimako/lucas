@@ -23,6 +23,7 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.ui.AnimatedIcon;
 import com.intellij.ui.TitledSeparator;
 import com.intellij.util.PathUtil;
 import com.picimako.org.apache.lucene.luke.app.IndexHandler;
@@ -123,7 +124,7 @@ public class CreateIndexDialogFactory extends DialogWrapper {
     dataBrowseBtn.setPreferredSize(new Dimension(100, 30));
     dataBrowseBtn.addActionListener(listeners::browseDataDirectory);
 
-    indicatorLbl.setIcon(ImageUtils.createImageIcon("indicator.gif", 20, 20));
+    indicatorLbl.setIcon(AnimatedIcon.Big.INSTANCE);
     indicatorLbl.setVisible(false);
 
     setOKButtonText(MessageUtils.getLocalizedMessage("button.create"));
