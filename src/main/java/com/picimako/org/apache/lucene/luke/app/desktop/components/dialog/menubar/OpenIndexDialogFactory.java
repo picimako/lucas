@@ -18,11 +18,15 @@
 package com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menubar;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.fileChooser.FileChooser;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.ui.TitledSeparator;
+import com.intellij.util.PathUtil;
 import com.picimako.org.apache.lucene.luke.app.DirectoryHandler;
 import com.picimako.org.apache.lucene.luke.app.IndexHandler;
 import com.picimako.org.apache.lucene.luke.app.desktop.LukeMain;
@@ -82,13 +86,15 @@ public final class OpenIndexDialogFactory extends DialogWrapper {
 
   private final JRadioButton keepAllCommitsRB = new JRadioButton();
 
-  private final ListenerFunctions listeners = new ListenerFunctions();
+  private final ListenerFunctions listeners;
 
   public OpenIndexDialogFactory(@Nullable Project project) throws IOException {
     super(project, LukeMain.getOwnerFrame(), false, IdeModalityType.IDE);
     this.prefs = PreferencesImpl.getInstance();
     this.directoryHandler = DirectoryHandler.getInstance();
     this.indexHandler = IndexHandler.getInstance();
+    this.listeners = new ListenerFunctions(project);
+
     setTitle(MessageUtils.getLocalizedMessage("openindex.dialog.title"));
     setSize(600, 420);
     initialize();
@@ -234,19 +240,26 @@ public final class OpenIndexDialogFactory extends DialogWrapper {
   }
 
   private class ListenerFunctions {
+    private final Project project;
 
-    @SuppressForbidden(reason = "FileChooser#getSelectedFile() returns java.io.File")
+    public ListenerFunctions(Project project) {
+      this.project = project;
+    }
+
     void browseDirectory(ActionEvent e) {
       File currentDir = getLastOpenedDirectory();
-      JFileChooser fc = currentDir == null ? new JFileChooser() : new JFileChooser(currentDir);
-      fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-      fc.setFileHidingEnabled(false);
-      int retVal = fc.showOpenDialog(getContentPanel());
-      if (retVal == JFileChooser.APPROVE_OPTION) {
-        File dir = fc.getSelectedFile();
-        idxPathCombo.insertItemAt(dir.getAbsolutePath(), 0);
-        idxPathCombo.setSelectedIndex(0);
-      }
+
+      FileChooser.chooseFile(
+          //Selects directories only
+          new FileChooserDescriptor(false, true, false, false, false, false)
+              .withShowHiddenFiles(true),
+          project,
+          LukeMain.getOwnerFrame(),
+          currentDir != null ? VfsUtil.findFileByIoFile(currentDir, true) : null,
+          selectedDirectory -> {
+            idxPathCombo.insertItemAt(PathUtil.toSystemDependentName(selectedDirectory.getPath()), 0);
+            idxPathCombo.setSelectedIndex(0);
+          });
     }
 
     @SuppressForbidden(reason = "JFileChooser constructor takes java.io.File")
@@ -255,7 +268,7 @@ public final class OpenIndexDialogFactory extends DialogWrapper {
       if (!history.isEmpty()) {
         Path path = Paths.get(history.get(0));
         if (Files.exists(path)) {
-          return path.getParent().toAbsolutePath().toFile();
+          return path.toAbsolutePath().toFile();
         }
       }
       return null;
