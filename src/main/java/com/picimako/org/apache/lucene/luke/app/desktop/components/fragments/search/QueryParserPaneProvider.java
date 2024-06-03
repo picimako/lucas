@@ -18,6 +18,7 @@
 package com.picimako.org.apache.lucene.luke.app.desktop.components.fragments.search;
 
 import com.intellij.openapi.ui.ComboBox;
+import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.table.JBTable;
 import com.picimako.org.apache.lucene.luke.app.desktop.components.ComponentOperatorRegistry;
@@ -443,7 +444,7 @@ public final class QueryParserPaneProvider implements QueryParserTabOperator {
       }
       genMultiTermSynonymsPhraseQueryCB.setEnabled(true);
       pointRangeQueryTable.setEnabled(false);
-      pointRangeQueryTable.setForeground(Color.gray);
+      pointRangeQueryTable.setForeground(JBColor.GRAY);
       TableUtils.setEnabled(pointRangeQueryTable, false);
     }
 

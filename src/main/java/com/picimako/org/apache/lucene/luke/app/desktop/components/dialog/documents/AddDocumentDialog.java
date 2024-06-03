@@ -20,6 +20,7 @@ package com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.docume
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.ui.JBColor;
 import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBScrollPane;
@@ -130,7 +131,7 @@ public class AddDocumentDialog extends DialogWrapper {
         infoTA.setLineWrap(true);
         infoTA.setEditable(false);
         infoTA.setText(MessageUtils.getLocalizedMessage("add_document.info"));
-        infoTA.setForeground(Color.gray);
+        infoTA.setForeground(JBColor.GRAY);
     }
 
     @Override
