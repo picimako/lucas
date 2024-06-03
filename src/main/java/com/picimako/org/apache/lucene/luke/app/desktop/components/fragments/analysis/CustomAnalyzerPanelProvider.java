@@ -18,11 +18,14 @@
 package com.picimako.org.apache.lucene.luke.app.desktop.components.fragments.analysis;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.fileChooser.FileChooser;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBList;
 import com.intellij.ui.components.JBScrollPane;
+import com.intellij.util.PathUtil;
 import com.intellij.util.ui.JBUI;
 import com.picimako.lucas.LucasBundle;
 import com.picimako.org.apache.lucene.luke.app.desktop.MessageBroker;
@@ -38,16 +41,13 @@ import org.apache.lucene.luke.app.desktop.util.MessageUtils;
 import org.apache.lucene.luke.app.desktop.util.lang.Callable;
 import org.apache.lucene.luke.models.analysis.Analysis;
 import org.apache.lucene.luke.models.analysis.CustomAnalyzerConfig;
-import org.apache.lucene.util.SuppressForbidden;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -68,8 +68,6 @@ public final class CustomAnalyzerPanelProvider implements CustomAnalyzerPanelOpe
   private final MessageBroker messageBroker;
 
   private final JTextField confDirTF = new JTextField();
-
-  private final JFileChooser fileChooser = new JFileChooser();
 
   private final JButton confDirBtn = new JButton(AllIcons.Actions.MenuOpen);
 
@@ -412,31 +410,30 @@ public final class CustomAnalyzerPanelProvider implements CustomAnalyzerPanelOpe
 
   // control methods
 
-  @SuppressForbidden(reason = "JFilechooser#getSelectedFile() returns java.io.File")
   private void chooseConfigDir() {
-    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-    int ret = fileChooser.showOpenDialog(containerPanel);
-    if (ret == JFileChooser.APPROVE_OPTION) {
-      File dir = fileChooser.getSelectedFile();
-      confDirTF.setText(dir.getAbsolutePath());
-    }
+    FileChooser.chooseFile(
+        //Selects directories only
+        new FileChooserDescriptor(false, true, false, false, false, false),
+        project,
+        containerPanel,
+        null,
+        selectedDirectory -> confDirTF.setText(PathUtil.toSystemDependentName(selectedDirectory.getPath())));
   }
 
-  @SuppressForbidden(reason = "JFilechooser#getSelectedFiles() returns java.io.File[]")
   private void loadExternalJars() {
-    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    fileChooser.setMultiSelectionEnabled(true);
-
-    int ret = fileChooser.showOpenDialog(containerPanel);
-    if (ret == JFileChooser.APPROVE_OPTION) {
-      File[] files = fileChooser.getSelectedFiles();
-      analysisModel.addExternalJars(Arrays.stream(files).map(File::getAbsolutePath).toList());
-      operatorRegistry
-          .get(CustomAnalyzerPanelOperator.class)
-          .ifPresent(CustomAnalyzerPanelOperator::resetAnalysisComponents);
-      messageBroker.showStatusMessage("External jars were added.");
-    }
+    FileChooser.chooseFiles(
+        //Selects files including .jars, as multi-selection
+        new FileChooserDescriptor(true, false, true, true, false, true),
+        project,
+        containerPanel,
+        null,
+        selectedFiles -> {
+          analysisModel.addExternalJars(selectedFiles.stream().map(file -> PathUtil.toSystemDependentName(file.getPath())).toList());
+          operatorRegistry
+              .get(CustomAnalyzerPanelOperator.class)
+              .ifPresent(CustomAnalyzerPanelOperator::resetAnalysisComponents);
+          messageBroker.showStatusMessage("External jars were added.");
+        });
   }
 
   private void buildAnalyzer() {

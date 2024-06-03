@@ -254,7 +254,7 @@ public final class OpenIndexDialogFactory extends DialogWrapper {
           new FileChooserDescriptor(false, true, false, false, false, false)
               .withShowHiddenFiles(true),
           project,
-          LukeMain.getOwnerFrame(),
+          getContentPanel(),
           currentDir != null ? VfsUtil.findFileByIoFile(currentDir, true) : null,
           selectedDirectory -> {
             idxPathCombo.insertItemAt(PathUtil.toSystemDependentName(selectedDirectory.getPath()), 0);

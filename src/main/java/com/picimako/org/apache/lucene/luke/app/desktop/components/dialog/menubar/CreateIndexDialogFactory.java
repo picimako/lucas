@@ -247,7 +247,7 @@ public class CreateIndexDialogFactory extends DialogWrapper {
           new FileChooserDescriptor(false, true, false, false, false, false)
               .withShowHiddenFiles(true),
           project,
-          LukeMain.getOwnerFrame(),
+          getContentPanel(),
           VfsUtil.findFileByIoFile(new File(tf.getText()), true),
           selectedDirectory -> tf.setText(PathUtil.toSystemDependentName(selectedDirectory.getPath())));
     }
