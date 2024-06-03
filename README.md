@@ -20,6 +20,8 @@ Main differences between Lucas and Luke:
 - Some buttons, icons, and UI element sizes are different, and may be located slightly elsewhere, to provide a smoother integration and user experience.
 - The Help menu and About dialog have been removed.
 
+<!-- Plugin description end -->
+
 ![Lucas UI Overview tab](lucas_ui.png)
 
 ### Reporting issues
@@ -29,8 +31,6 @@ or when they are specific to the IDE/plugin and don't require a corresponding ch
 
 Thus, before reporting an issue, please check if it can be reproduced in Luke itself (depending on the nature of the issue).
 If it can be, please raise the issue under the [Apache/Lucene](https://github.com/apache/lucene) repository, otherwise report it in this one.
-
-<!-- Plugin description end -->
 
 ### Project structure notes
 
