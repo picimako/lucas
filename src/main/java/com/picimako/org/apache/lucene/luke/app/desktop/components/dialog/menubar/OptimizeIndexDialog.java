@@ -89,7 +89,7 @@ public class OptimizeIndexDialog extends DialogWrapper {
         expungeCB.setText(MessageUtils.getLocalizedMessage("optimize.checkbox.expunge"));
         expungeCB.setOpaque(false);
 
-        indicatorLbl.setIcon(AnimatedIcon.Big.INSTANCE);
+        indicatorLbl.setIcon(AnimatedIcon.Default.INSTANCE);
 
         logArea.setEditable(false);
         logArea.setLineWrap(true); //Enabled line wrap, so the horizontal scrollbar is not displayed

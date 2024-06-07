@@ -102,7 +102,7 @@ public class CheckIndexDialog extends DialogWrapper {
         repairBtn.setEnabled(false);
         repairBtn.addActionListener(listeners::repairIndex);
 
-        indicatorLbl.setIcon(AnimatedIcon.Big.INSTANCE);
+        indicatorLbl.setIcon(AnimatedIcon.Default.INSTANCE);
 
         logArea.setEditable(false);
     }

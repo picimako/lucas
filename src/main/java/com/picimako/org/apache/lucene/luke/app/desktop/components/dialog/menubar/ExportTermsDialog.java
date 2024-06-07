@@ -173,7 +173,7 @@ public class ExportTermsDialog extends DialogWrapper {
     private JPanel statusPanel() {
         JPanel status = new JPanel(new FlowLayout(FlowLayout.LEADING));
         status.setOpaque(false);
-        indicatorLbl.setIcon(AnimatedIcon.Big.INSTANCE);
+        indicatorLbl.setIcon(AnimatedIcon.Default.INSTANCE);
         indicatorLbl.setVisible(false);
         status.add(statusLbl);
         status.add(indicatorLbl);

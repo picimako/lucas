@@ -124,7 +124,7 @@ public class CreateIndexDialogFactory extends DialogWrapper {
     dataBrowseBtn.setPreferredSize(new Dimension(100, 30));
     dataBrowseBtn.addActionListener(listeners::browseDataDirectory);
 
-    indicatorLbl.setIcon(AnimatedIcon.Big.INSTANCE);
+    indicatorLbl.setIcon(AnimatedIcon.Default.INSTANCE);
     indicatorLbl.setVisible(false);
 
     setOKButtonText(MessageUtils.getLocalizedMessage("button.create"));
