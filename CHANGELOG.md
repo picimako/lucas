@@ -6,6 +6,7 @@
 
 ## [0.2.0]
 ### Changed
+- Updated Lucene to 9.11.0.
 - Changed the file chooser dialog in the *Open Index*, *Create Index* dialogs and the *Custom Analyzer* panel to an IntelliJ one to provide
 a smoother user experience.
 - Replaced the previous GIF loading icon to a sharper SVG one.
