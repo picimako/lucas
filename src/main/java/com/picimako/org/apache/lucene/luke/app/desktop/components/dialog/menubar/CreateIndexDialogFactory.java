@@ -18,14 +18,18 @@
 package com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menubar;
 
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.fileChooser.FileChooser;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.ui.AnimatedIcon;
 import com.intellij.ui.TitledSeparator;
+import com.intellij.util.PathUtil;
 import com.picimako.org.apache.lucene.luke.app.IndexHandler;
 import com.picimako.org.apache.lucene.luke.app.desktop.LukeMain;
 import com.picimako.org.apache.lucene.luke.app.desktop.PreferencesImpl;
 import org.apache.lucene.luke.app.desktop.util.FontUtils;
-import org.apache.lucene.luke.app.desktop.util.ImageUtils;
 import org.apache.lucene.luke.app.desktop.util.MessageUtils;
 import org.apache.lucene.luke.app.desktop.util.URLLabel;
 import org.apache.lucene.luke.models.tools.IndexTools;
@@ -34,7 +38,6 @@ import org.apache.lucene.luke.util.LoggerFactory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.NamedThreadFactory;
-import org.apache.lucene.util.SuppressForbidden;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -79,11 +82,13 @@ public class CreateIndexDialogFactory extends DialogWrapper {
 
   private final JLabel indicatorLbl = new JLabel();
 
-  private final ListenerFunctions listeners = new ListenerFunctions();
+  private final ListenerFunctions listeners;
 
   public CreateIndexDialogFactory(@Nullable Project project) throws IOException {
     super(project, LukeMain.getOwnerFrame(), false, IdeModalityType.IDE);
     this.indexHandler = IndexHandler.getInstance();
+    this.listeners = new ListenerFunctions(project);
+
     setTitle(MessageUtils.getLocalizedMessage("createindex.dialog.title"));
     setSize(600, 360);
     initialize();
@@ -119,7 +124,7 @@ public class CreateIndexDialogFactory extends DialogWrapper {
     dataBrowseBtn.setPreferredSize(new Dimension(100, 30));
     dataBrowseBtn.addActionListener(listeners::browseDataDirectory);
 
-    indicatorLbl.setIcon(ImageUtils.createImageIcon("indicator.gif", 20, 20));
+    indicatorLbl.setIcon(AnimatedIcon.Default.INSTANCE);
     indicatorLbl.setVisible(false);
 
     setOKButtonText(MessageUtils.getLocalizedMessage("button.create"));
@@ -222,6 +227,11 @@ public class CreateIndexDialogFactory extends DialogWrapper {
   }
 
   private class ListenerFunctions {
+    private final Project project;
+
+    public ListenerFunctions(Project project) {
+      this.project = project;
+    }
 
     void browseLocationDirectory(ActionEvent e) {
       browseDirectory(locationTF);
@@ -231,16 +241,15 @@ public class CreateIndexDialogFactory extends DialogWrapper {
       browseDirectory(dataDirTF);
     }
 
-    @SuppressForbidden(reason = "JFilechooser#getSelectedFile() returns java.io.File")
     private void browseDirectory(JTextField tf) {
-      JFileChooser fc = new JFileChooser(new File(tf.getText()));
-      fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-      fc.setFileHidingEnabled(false);
-      int retVal = fc.showOpenDialog(getContentPanel());
-      if (retVal == JFileChooser.APPROVE_OPTION) {
-        File dir = fc.getSelectedFile();
-        tf.setText(dir.getAbsolutePath());
-      }
+      FileChooser.chooseFile(
+          //Selects directories only
+          new FileChooserDescriptor(false, true, false, false, false, false)
+              .withShowHiddenFiles(true),
+          project,
+          getContentPanel(),
+          VfsUtil.findFileByIoFile(new File(tf.getText()), true),
+          selectedDirectory -> tf.setText(PathUtil.toSystemDependentName(selectedDirectory.getPath())));
     }
 
     void createIndex() {

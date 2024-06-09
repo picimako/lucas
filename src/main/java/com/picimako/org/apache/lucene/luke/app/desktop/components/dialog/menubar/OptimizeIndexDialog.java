@@ -20,11 +20,11 @@ package com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menuba
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.ui.AnimatedIcon;
 import com.intellij.ui.JBIntSpinner;
 import com.intellij.ui.components.JBScrollPane;
 import com.picimako.org.apache.lucene.luke.app.IndexHandler;
 import com.picimako.org.apache.lucene.luke.app.desktop.LukeMain;
-import org.apache.lucene.luke.app.desktop.util.ImageUtils;
 import org.apache.lucene.luke.app.desktop.util.MessageUtils;
 import org.apache.lucene.luke.app.desktop.util.TextAreaPrintStream;
 import org.apache.lucene.luke.models.tools.IndexTools;
@@ -89,7 +89,7 @@ public class OptimizeIndexDialog extends DialogWrapper {
         expungeCB.setText(MessageUtils.getLocalizedMessage("optimize.checkbox.expunge"));
         expungeCB.setOpaque(false);
 
-        indicatorLbl.setIcon(ImageUtils.createImageIcon("indicator.gif", 20, 20));
+        indicatorLbl.setIcon(AnimatedIcon.Default.INSTANCE);
 
         logArea.setEditable(false);
         logArea.setLineWrap(true); //Enabled line wrap, so the horizontal scrollbar is not displayed

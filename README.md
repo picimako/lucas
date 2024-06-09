@@ -1,5 +1,7 @@
 # Lucas (Apache Lucene's Luke for IntelliJ)
 
+[![Version](https://img.shields.io/jetbrains/plugin/v/24567-lucas.svg)](https://plugins.jetbrains.com/plugin/24567-lucas)
+
 <!-- Plugin description -->
 Lucas is a plugin that brings [Apache Lucene's Luke](https://github.com/apache/lucene/tree/main/lucene/luke) standalone desktop application to IntelliJ-based IDEs.
 Its goal is to provide a way to use Luke in an integrated way.
@@ -19,7 +21,6 @@ Main differences between Lucas and Luke:
 - Luke's themes are removed. The plugin uses the theme currently set in the IDE.
 - Some buttons, icons, and UI element sizes are different, and may be located slightly elsewhere, to provide a smoother integration and user experience.
 - The Help menu and About dialog have been removed.
-
 <!-- Plugin description end -->
 
 ![Lucas UI Overview tab](lucas_ui.png)

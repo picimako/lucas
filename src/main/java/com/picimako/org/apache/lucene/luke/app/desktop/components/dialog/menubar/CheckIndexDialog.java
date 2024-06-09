@@ -20,12 +20,12 @@ package com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menuba
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.ui.AnimatedIcon;
 import com.intellij.ui.components.JBScrollPane;
 import com.picimako.org.apache.lucene.luke.app.IndexHandler;
 import com.picimako.org.apache.lucene.luke.app.desktop.LukeMain;
 import org.apache.lucene.index.CheckIndex;
 import org.apache.lucene.luke.app.LukeState;
-import org.apache.lucene.luke.app.desktop.util.ImageUtils;
 import org.apache.lucene.luke.app.desktop.util.MessageUtils;
 import org.apache.lucene.luke.app.desktop.util.TextAreaPrintStream;
 import org.apache.lucene.luke.models.tools.IndexTools;
@@ -102,7 +102,7 @@ public class CheckIndexDialog extends DialogWrapper {
         repairBtn.setEnabled(false);
         repairBtn.addActionListener(listeners::repairIndex);
 
-        indicatorLbl.setIcon(ImageUtils.createImageIcon("indicator.gif", 20, 20));
+        indicatorLbl.setIcon(AnimatedIcon.Default.INSTANCE);
 
         logArea.setEditable(false);
     }

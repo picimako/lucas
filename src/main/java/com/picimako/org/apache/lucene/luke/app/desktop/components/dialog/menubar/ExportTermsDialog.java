@@ -20,11 +20,11 @@ package com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menuba
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
+import com.intellij.ui.AnimatedIcon;
 import com.intellij.ui.JBColor;
 import com.picimako.org.apache.lucene.luke.app.IndexHandler;
 import com.picimako.org.apache.lucene.luke.app.desktop.LukeMain;
 import org.apache.lucene.luke.app.LukeState;
-import org.apache.lucene.luke.app.desktop.util.ImageUtils;
 import org.apache.lucene.luke.app.desktop.util.MessageUtils;
 import org.apache.lucene.luke.app.desktop.util.StyleConstants;
 import org.apache.lucene.luke.models.LukeException;
@@ -173,7 +173,7 @@ public class ExportTermsDialog extends DialogWrapper {
     private JPanel statusPanel() {
         JPanel status = new JPanel(new FlowLayout(FlowLayout.LEADING));
         status.setOpaque(false);
-        indicatorLbl.setIcon(ImageUtils.createImageIcon("indicator.gif", 20, 20));
+        indicatorLbl.setIcon(AnimatedIcon.Default.INSTANCE);
         indicatorLbl.setVisible(false);
         status.add(statusLbl);
         status.add(indicatorLbl);

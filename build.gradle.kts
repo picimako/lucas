@@ -22,7 +22,7 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-    val luceneVersion = "9.10.0"
+    val luceneVersion = "9.11.0"
 
     implementation("org.apache.lucene:lucene-core:$luceneVersion")
 
