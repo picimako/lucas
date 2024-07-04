@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.3.0]
+### Changed
+- Updated Lucene to 9.11.1.
+
 ## [0.2.0]
 ### Changed
 - Updated Lucene to 9.11.0.
