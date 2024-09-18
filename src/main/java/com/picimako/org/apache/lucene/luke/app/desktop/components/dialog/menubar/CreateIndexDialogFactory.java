@@ -37,6 +37,11 @@ import org.apache.lucene.luke.models.tools.IndexToolsFactory;
 import org.apache.lucene.luke.util.LoggerFactory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.FSLockFactory;
+import org.apache.lucene.store.LockFactory;
+import org.apache.lucene.store.MMapDirectory;
+import org.apache.lucene.store.NIOFSDirectory;
+import org.apache.lucene.util.Constants;
 import org.apache.lucene.util.NamedThreadFactory;
 import org.jetbrains.annotations.Nullable;
 
@@ -282,7 +287,7 @@ public class CreateIndexDialogFactory extends DialogWrapper {
                 setOKActionEnabled(false);
 
                 try {
-                  Directory dir = FSDirectory.open(path);
+                  Directory dir = open(path, FSLockFactory.getDefault());
                   IndexTools toolsModel = new IndexToolsFactory().newInstance(dir);
 
                   if (dataDirTF.getText().isEmpty()) {
@@ -354,6 +359,19 @@ public class CreateIndexDialogFactory extends DialogWrapper {
 
     private void clearDataDir(ActionEvent e) {
       dataDirTF.setText("");
+    }
+
+    /**
+     * Just like {@link FSDirectory#open(Path)}, but allows you to also specify a custom {@link LockFactory}.
+     * <p>
+     * LICENSE NOTE: This is copied from {@link FSDirectory} to be able to create a custom {@code MMapDirectory} instance.
+     */
+    private static FSDirectory open(Path path, LockFactory lockFactory) throws IOException {
+      if (Constants.JRE_IS_64BIT && MMapDirectory.UNMAP_SUPPORTED) {
+        return new MMapDirectory(path, lockFactory);
+      } else {
+        return new NIOFSDirectory(path, lockFactory);
+      }
     }
   }
 }

@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [0.4.0]
+### Changed
+- New supported IDE version range: 2024.2 - 2024.3.*.
+- Updated the project to use the IntelliJ Platform Gradle Plugin 2.0.
+- Updated the project to use JDK 21.
+
 ## [0.3.0]
 ### Changed
 - Updated Lucene to 9.11.1.
@@ -13,7 +19,7 @@
 - Updated Lucene to 9.11.0.
 - Changed the file chooser dialog in the *Open Index*, *Create Index* dialogs and the *Custom Analyzer* panel to an IntelliJ one to provide
 a smoother user experience.
-- Replaced the previous GIF loading icon to a sharper SVG one.
+- Replaced the previous GIF loading icon with a sharper SVG one.
 
 ## [0.1.0]
 ### Added
