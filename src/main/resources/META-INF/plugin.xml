@@ -8,6 +8,8 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.picimako.lucas.ProjectStartupActivity"/>
+        <notificationGroup id="Lucas JDK 21 Configuration" displayType="BALLOON"/>
     </extensions>
 
     <actions>
