@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.4.1]
+### Changed
+- Temporarily disabled the Create index menu option.
+
 ## [0.4.0]
 ### Changed
 - New supported IDE version range: 2024.2 - 2024.3.*.
