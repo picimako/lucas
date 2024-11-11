@@ -339,7 +339,9 @@ public class CreateIndexDialogFactory extends DialogWrapper {
                 setOKActionEnabled(true);
 
                 /*
-                 * Closes the dialog only when the index creation was successful.
+                 * Closes the dialog only when the index creation was successful (or in edge cases
+                 * when something breaks and the process is deemed done, like when some Java preview feature
+                 * related classes are not found).
                  *
                  * This close operation is moved here from 'doInBackground()' because closing a DialogWrapper
                  * must happen on the EDT.

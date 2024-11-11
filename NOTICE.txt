@@ -4,3 +4,9 @@ The Apache Software Foundation (http://www.apache.org/).
 Many classes are reused from the Luke subproject of the Apache Lucene (https://github.com/apache/lucene) project.
 Those classes are placed either under the 'com.picimako.org.apache.lucene.luke...' package structure corresponding
 to their original packages, or in their original packages when no other option is available.
+
+This product includes the classes 'org.eclipse.jetty.util.ServiceLoaderSpliterator' and 'org.eclipse.jetty.util.TypeUtil'
+from the Jetty project (https://github.com/jetty/jetty.project)
+which is licensed under Eclipse Public License 2.0 which is available at https://www.eclipse.org/legal/epl-2.0,
+and may also be made available under the Apache License v2.0 Secondary Licenses which is available at
+https://www.apache.org/licenses/LICENSE-2.0.

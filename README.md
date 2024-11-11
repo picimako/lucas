@@ -35,6 +35,11 @@ Main differences between Lucas and Luke:
 - Luke's themes are removed. The plugin uses the theme currently set in the IDE.
 - Some buttons, icons, and UI element sizes are different, and may be located slightly elsewhere, to provide a smoother integration and user experience.
 - The Help menu and About dialog have been removed.
+
+## Known issues
+
+The Create index menu option is removed for now due to some unknown, potentially classloading related, issue that prevents the
+index creation to execute.
 <!-- Plugin description end -->
 
 ![Lucas UI Overview tab](lucas_ui.png)
