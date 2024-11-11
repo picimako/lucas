@@ -34,7 +34,7 @@ dependencies {
     //In case one wants to open in index using AssertingCodec in that index,
     // add implementation("org.apache.lucene:lucene-test-framework:$luceneVersion")
 
-    val luceneVersion = "9.11.1"
+    val luceneVersion = "9.12.0"
 
     implementation("org.apache.lucene:lucene-core:$luceneVersion")
 
@@ -141,6 +141,7 @@ tasks {
     //Required for classes in 'org.apache.lucene.store' because they use JDK 21 Preview features.
     // Without this option, the build would fail.
     compileJava {
+        //Since Lucene 9.11.x (and probably earlier) with JDK 21 / Lucas 0.4.0
         options.compilerArgs.add("--enable-preview")
     }
 

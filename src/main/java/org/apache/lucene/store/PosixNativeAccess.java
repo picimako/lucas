@@ -75,7 +75,7 @@ final class PosixNativeAccess extends NativeAccess {
           String.format(
               Locale.ENGLISH,
               "Lucene has no access to native functions. To enable access to native functions, "
-                  + "pass the following on command line: --enable-native-access=%s",
+              + "pass the following on command line: --enable-native-access=%s",
               Optional.ofNullable(PosixNativeAccess.class.getModule().getName())
                   .orElse("ALL-UNNAMED")));
     }

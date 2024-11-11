@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.5.0]
+### Changed
+- Updated Lucene to 9.12.0.
+
 ## [0.4.1]
 ### Changed
 - Temporarily disabled the Create index menu option.
