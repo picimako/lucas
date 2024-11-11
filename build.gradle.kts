@@ -123,7 +123,7 @@ intellijPlatform {
 // Without this option, finding those classes would fail during the IDE's run.
 tasks.named<RunIdeTask>("runIde") {
     jvmArgumentProviders += CommandLineArgumentProvider {
-        listOf("--enable-preview")
+        listOf("--enable-preview", "--add-modules jdk.incubator.vector")
     }
 }
 
@@ -143,6 +143,9 @@ tasks {
     compileJava {
         //Since Lucene 9.11.x (and probably earlier) with JDK 21 / Lucas 0.4.0
         options.compilerArgs.add("--enable-preview")
+        //Since Lucene 9.12.0 / Lucas 0.5.0
+        options.compilerArgs.add("--add-modules")
+        options.compilerArgs.add("jdk.incubator.vector")
     }
 
     // Process UTF8 property files to unicode escapes.
