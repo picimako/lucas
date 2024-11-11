@@ -8,6 +8,10 @@
 ### Changed
 - Updated Lucene to 9.12.0.
 
+### Fixed
+- Fixed the collision of Lucene classes coming from the IntelliJ Platform sources and via Lucas plugin dependencies.
+This in turn fixes (should fix) the 'Open index' functionality.
+
 ## [0.4.1]
 ### Changed
 - Temporarily disabled the Create index menu option.
