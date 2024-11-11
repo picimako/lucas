@@ -23,7 +23,7 @@ import com.intellij.ui.components.JBMenu;
 import com.picimako.org.apache.lucene.luke.app.DirectoryHandler;
 import com.picimako.org.apache.lucene.luke.app.IndexHandler;
 import com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menubar.CheckIndexDialogFactory;
-//import com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menubar.CreateIndexDialogFactory;
+import com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menubar.CreateIndexDialogFactory;
 import com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menubar.ExportTermsDialogFactory;
 import com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menubar.OpenIndexDialogFactory;
 import com.picimako.org.apache.lucene.luke.app.desktop.components.dialog.menubar.OptimizeIndexDialogFactory;
@@ -58,7 +58,7 @@ public final class MenuBarProvider {
 
   private final JMenuItem reopenIndexMItem = new JBMenuItem(MessageUtils.getLocalizedMessage("menu.item.reopen_index"));
 
-//  private final JMenuItem createIndexMItem = new JBMenuItem(MessageUtils.getLocalizedMessage("menu.item.create_index"));
+  private final JMenuItem createIndexMItem = new JBMenuItem(MessageUtils.getLocalizedMessage("menu.item.create_index"));
 
   private final JMenuItem closeIndexMItem = new JBMenuItem(MessageUtils.getLocalizedMessage("menu.item.close_index"));
 
@@ -104,8 +104,8 @@ public final class MenuBarProvider {
     reopenIndexMItem.addActionListener(listeners::reopenIndex);
     fileMenu.add(reopenIndexMItem);
 
-//    createIndexMItem.addActionListener(listeners::showCreateIndexDialog);
-//    fileMenu.add(createIndexMItem);
+    createIndexMItem.addActionListener(listeners::showCreateIndexDialog);
+    fileMenu.add(createIndexMItem);
 
     closeIndexMItem.setEnabled(false);
     closeIndexMItem.addActionListener(listeners::closeIndex);
@@ -139,13 +139,13 @@ public final class MenuBarProvider {
       }
     }
 
-//    void showCreateIndexDialog(ActionEvent e) {
-//      try {
-//        new CreateIndexDialogFactory(project).show();
-//      } catch (IOException ex) {
-//        throw new LukeException(ex);
-//      }
-//    }
+    void showCreateIndexDialog(ActionEvent e) {
+      try {
+        new CreateIndexDialogFactory(project).show();
+      } catch (IOException ex) {
+        throw new LukeException(ex);
+      }
+    }
 
     void reopenIndex(ActionEvent e) {
       indexHandler.reOpen();
