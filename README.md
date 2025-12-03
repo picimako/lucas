@@ -2,6 +2,11 @@
 
 [![Version](https://img.shields.io/jetbrains/plugin/v/24567-lucas.svg)](https://plugins.jetbrains.com/plugin/24567-lucas)
 
+> [!IMPORTANT]
+> Development on the plugin is paused for the time being.
+> Technical reasons include the fact that it is not allowed to use Java incubator features
+> with the IntelliJ Platform due to stability reasons, which Lucene does use.
+
 <!-- Plugin description -->
 Lucas is a plugin that brings [Apache Lucene's Luke](https://github.com/apache/lucene/tree/main/lucene/luke) standalone desktop application to IntelliJ-based IDEs.
 Its goal is to provide a way to use Luke in an integrated way.
